@@ -55,6 +55,7 @@ header {
 
 .logo {
     width: 90px;
+    display: block;
 }
 
 .menu {
@@ -74,7 +75,7 @@ header {
     }
 
         .menu a:hover {
-            background-color: gold;
+            background-color: white;
             color: black;
         }
 
