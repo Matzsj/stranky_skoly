@@ -1,11 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using stranky_skoly.DbContext;
 using stranky_skoly.Models;
 using System.Diagnostics;
+
+
 
 namespace stranky_skoly.Controllers
 {
     public class UserController : Controller
     {
+        private readonly AppDbContext _context;
+
+        public UserController(AppDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Přihlášení()
         {
             return View();
@@ -42,16 +52,27 @@ namespace stranky_skoly.Controllers
         [HttpPost]
         public IActionResult Registrace(string jmeno, string heslo, string heslo2)
         {
-            // Kontrola, zda se hesla shodují
+            // 1. Kontrola, zda se hesla shodují
             if (heslo != heslo2)
             {
                 ModelState.AddModelError(string.Empty, "Zadaná hesla se neshodují.");
                 return View();
             }
 
-            // Zde by normálně proběhlo uložení uživatele do databáze
+            // 2. Vytvoření nového uživatele (objektu User)
+            var novyUzivatel = new User
+            {
+                Name = jmeno,
+                Password = heslo // V reálné aplikaci by se heslo mělo hashovat (např. pomocí BCrypt)
+            };
 
-            // Po úspěšné registraci přesměrovat třeba na přihlášení
+            // 3. Přidání uživatele do databázového kontextu
+            _context.Users.Add(novyUzivatel);
+
+            // 4. Uložení změn do databáze
+            _context.SaveChanges();
+
+            // 5. Po úspěšné registraci přesměrovat na přihlášení
             return RedirectToAction("Přihlášení");
         }
 

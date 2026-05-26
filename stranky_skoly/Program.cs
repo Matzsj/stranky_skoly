@@ -1,3 +1,6 @@
+using stranky_skoly.DbContext;
+using Microsoft.EntityFrameworkCore;
+
 namespace stranky_skoly
 {
     public class Program
@@ -8,6 +11,10 @@ namespace stranky_skoly
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(
+                    builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 
@@ -29,6 +36,12 @@ namespace stranky_skoly
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                context.Database.EnsureCreated();
+            }
 
             app.Run();
         }
