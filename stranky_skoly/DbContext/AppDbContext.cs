@@ -13,6 +13,8 @@ namespace stranky_skoly.DbContext
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<Student> Students { get; set; }
     }
 }
 

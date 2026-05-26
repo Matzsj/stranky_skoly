@@ -12,7 +12,10 @@
 <body>
     <header>
         <div class="container header-flex">
-            <img src="~/obrazky/logo_web.png" alt="logo sps Trutnov" class="logo" />
+            <div class="header-logo-section">
+                <img src="~/obrazky/logo_web.png" alt="logo sps Trutnov" class="logo" />
+                <span class="header-text">SPAŠT.cz</span>
+            </div>
 
             <nav>
                 <ul class="menu">
@@ -20,6 +23,7 @@
                     <li><a asp-controller="User" asp-action="Přihlášení">Přihlášení</a></li>
                     <li><a asp-controller="User" asp-action="Registrace">Registrace</a></li>
                     <li><a asp-controller="User" asp-action="Učitelé">Učitelé</a></li>
+                    <li><a asp-controller="User" asp-action="Rozvrh">Rozvrh</a></li>
                 </ul>
             </nav>
         </div>  
