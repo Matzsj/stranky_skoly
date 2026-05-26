@@ -26,8 +26,6 @@ namespace stranky_skoly
                 app.UseHsts();
             }
 
-            
-
             app.UseHttpsRedirection();
             app.UseRouting();
 
@@ -38,6 +36,12 @@ namespace stranky_skoly
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                context.Database.EnsureCreated();
+            }
 
             app.Run();
         }
