@@ -1,0 +1,201 @@
+@{
+    ViewData["Title"] = "Rozvrh - Třída 2.EP";
+}
+
+<style>
+    .class-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin: 30px 0;
+    }
+
+    .schedule-section, .students-section {
+        border: 2px solid #333;
+        border-radius: 8px;
+        padding: 20px;
+        background-color: #f9f9f9;
+    }
+
+    .schedule-section h2, .students-section h2 {
+        margin-top: 0;
+        color: #223974;
+        border-bottom: 2px solid #223974;
+        padding-bottom: 10px;
+        font-size: 22px;
+    }
+
+    .schedule-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        font-size: 14px;
+    }
+
+    .schedule-table th, .schedule-table td {
+        border: 1px solid #ddd;
+        padding: 10px 8px;
+        text-align: center;
+    }
+
+    .schedule-table th {
+        background-color: #223974;
+        color: white;
+        font-weight: bold;
+    }
+
+    .schedule-table tr:nth-child(even) {
+        background-color: #f0f0f0;
+    }
+
+    .schedule-table tr:hover {
+        background-color: #e8f0fe;
+    }
+
+    .schedule-table td:first-child {
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .students-list {
+        list-style: none;
+        padding: 0;
+        margin: 15px 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .students-list li {
+        padding: 10px 12px;
+        background-color: white;
+        border-left: 4px solid #223974;
+        border-radius: 4px;
+        transition: 0.3s;
+        font-size: 14px;
+    }
+
+    .students-list li:hover {
+        background-color: #e8f0fe;
+        padding-left: 18px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<div class="container">
+    <h1>Třída 2.EP</h1>
+
+    <div class="class-container">
+        <!-- Rozvrh -->
+        <div class="schedule-section">
+            <h2>Rozvrh hodin</h2>
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Hodina</th>
+                        <th>Pondělí</th>
+                        <th>Úterý</th>
+                        <th>Středa</th>
+                        <th>Čtvrtek</th>
+                        <th>Pátek</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1.</td>
+                        <td>Matematika</td>
+                        <td>Český jazyk</td>
+                        <td>Angličtina</td>
+                        <td>Fyzika</td>
+                        <td>Český jazyk</td>
+                    </tr>
+                    <tr>
+                        <td>2.</td>
+                        <td>Matematika</td>
+                        <td>Český jazyk</td>
+                        <td>Angličtina</td>
+                        <td>Chemie</td>
+                        <td>Český jazyk</td>
+                    </tr>
+                    <tr>
+                        <td>3.</td>
+                        <td>Informatika</td>
+                        <td>Dějepis</td>
+                        <td>Matematika</td>
+                        <td>Informatika</td>
+                        <td>Matematika</td>
+                    </tr>
+                    <tr>
+                        <td>4.</td>
+                        <td>Informatika</td>
+                        <td>Fyzika</td>
+                        <td>Matematika</td>
+                        <td>Informatika</td>
+                        <td>Angličtina</td>
+                    </tr>
+                    <tr>
+                        <td>5.</td>
+                        <td>Angličtina</td>
+                        <td>Informatika</td>
+                        <td>Chemie</td>
+                        <td>Angličtina</td>
+                        <td>Fyzika</td>
+                    </tr>
+                    <tr>
+                        <td>6.</td>
+                        <td>Angličtina</td>
+                        <td>Informatika</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>Dějepis</td>
+                    </tr>
+                    <tr>
+                        <td>7.</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>Tělocvik</td>
+                        <td>Tělocvik</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Seznam žáků -->
+        <div class="students-section">
+            <h2>Žáci třídy (30)</h2>
+            <ul class="students-list">
+                <li>Adam Bednář</li>
+                <li>Barbora Čermáková</li>
+                <li>Dominik Dvořák</li>
+                <li>Eva Fialová</li>
+                <li>Filip Fiala</li>
+                <li>Gabriela Gregorová</li>
+                <li>Hana Havlíčková</li>
+                <li>Igor Ignác</li>
+                <li>Jana Janská</li>
+                <li>Kateřina Kopecká</li>
+                <li>Lukáš Lukáč</li>
+                <li>Michaela Míšková</li>
+                <li>Natálie Novotná</li>
+                <li>Oldřich Ostrý</li>
+                <li>Petra Pavlová</li>
+                <li>Richard Řehoř</li>
+                <li>Silvie Slováková</li>
+                <li>Tomáš Tomka</li>
+                <li>Ústav Úlehla</li>
+                <li>Václav Václavík</li>
+                <li>Vladimír Verner</li>
+                <li>Wendy Wesleyová</li>
+                <li>Xenie Xénií</li>
+                <li>Yvonna Yvonová</li>
+                <li>Zdeněk Zákupný</li>
+                <li>Alice Adamová</li>
+                <li>Bedřich Bílý</li>
+                <li>Cyprián Cyprián</li>
+                <li>Dušan Dudáček</li>
+                <li>Ema Emínová</li>
+            </ul>
+        </div>
+    </div>
+</div>

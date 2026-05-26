@@ -44,6 +44,11 @@ namespace stranky_skoly.Controllers
             return View();
         }
 
+        public IActionResult Rozvrh()
+        {
+            return View();
+        }
+
         public IActionResult Registrace()
         {
             return View();
