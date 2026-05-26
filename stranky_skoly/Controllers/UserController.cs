@@ -2,6 +2,7 @@
 using stranky_skoly.DbContext;
 using stranky_skoly.Models;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Identity;
 
 
 
@@ -24,19 +25,23 @@ namespace stranky_skoly.Controllers
         [HttpPost]
         public IActionResult Přihlášení(string jmeno, string heslo)
         {
-            // Zde by normálně probíhalo ověření přes databázi.
-            // Pro teď uděláme ukázku: Můžete se přihlásit jen jako "admin" s heslem "1234".
-            if (jmeno == "admin" && heslo == "1234")
+            var user = _context.Users.FirstOrDefault(u => u.Name == jmeno);
+
+            if (user != null)
             {
-                // Úspěšné přihlášení -> Přesměrujeme uživatele, například na úvodní stránku (Home/Index)
-                return RedirectToAction("Index", "Home");
+                var hasher = new PasswordHasher<User>();
+
+                var result = hasher.VerifyHashedPassword(user, user.Password, heslo);
+
+                if (result == PasswordVerificationResult.Success)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
 
-            // Pokud je heslo nebo jméno špatné, přidáme chybu do ModelState z vašeho kódu
             ModelState.AddModelError(string.Empty, "Špatné jméno nebo heslo.");
-
-            // Vrátíme uživatele zpět na přihlašovací formulář, kde se mu následně zobrazí chyba
-            return View();
+            return View(); // 👈 TO TI CHYBÍ
+        
         }
 
         public IActionResult Učitelé()
@@ -57,6 +62,7 @@ namespace stranky_skoly.Controllers
         [HttpPost]
         public IActionResult Registrace(string jmeno, string heslo, string heslo2)
         {
+            var hasher = new PasswordHasher<User>();
             // 1. Kontrola, zda se hesla shodují
             if (heslo != heslo2)
             {
@@ -68,9 +74,9 @@ namespace stranky_skoly.Controllers
             var novyUzivatel = new User
             {
                 Name = jmeno,
-                Password = heslo // V reálné aplikaci by se heslo mělo hashovat (např. pomocí BCrypt)
+                
             };
-
+            novyUzivatel.Password = hasher.HashPassword(novyUzivatel, heslo);
             // 3. Přidání uživatele do databázového kontextu
             _context.Users.Add(novyUzivatel);
 
