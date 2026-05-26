@@ -3,6 +3,7 @@ using stranky_skoly.DbContext;
 using stranky_skoly.Models;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Identity;
+using System.Linq;
 
 
 
@@ -23,9 +24,9 @@ namespace stranky_skoly.Controllers
         }
 
         [HttpPost]
-        public IActionResult Přihlášení(string jmeno, string heslo)
+        public IActionResult Přihlášení(string email, string heslo)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Name == jmeno);
+            var user = _context.Users.FirstOrDefault(u => u.Name == email);
 
             if (user != null)
             {
@@ -35,7 +36,15 @@ namespace stranky_skoly.Controllers
 
                 if (result == PasswordVerificationResult.Success)
                 {
-                    return RedirectToAction("Index", "Home");
+                    if (!user.Name.Any(char.IsDigit))
+                    {
+                        return RedirectToAction("Učitelé", "User");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    
                 }
             }
 
@@ -55,7 +64,7 @@ namespace stranky_skoly.Controllers
         }
 
         [HttpPost]
-        public IActionResult Registrace(string jmeno, string heslo, string heslo2)
+        public IActionResult Registrace(string email, string heslo, string heslo2)
         {
             var hasher = new PasswordHasher<User>();
             // 1. Kontrola, zda se hesla shodují
@@ -68,7 +77,7 @@ namespace stranky_skoly.Controllers
             // 2. Vytvoření nového uživatele (objektu User)
             var novyUzivatel = new User
             {
-                Name = jmeno,
+                Name = email
                 
             };
             novyUzivatel.Password = hasher.HashPassword(novyUzivatel, heslo);
