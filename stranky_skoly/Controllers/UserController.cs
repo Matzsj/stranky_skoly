@@ -44,6 +44,11 @@ namespace stranky_skoly.Controllers
         
         }
 
+        public IActionResult Učitelé()
+        {
+            return View();
+        }
+
         public IActionResult Registrace()
         {
             return View();
