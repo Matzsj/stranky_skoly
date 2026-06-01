@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 using stranky_skoly.DbContext;
 using stranky_skoly.Models;
 using System.Diagnostics;
@@ -24,19 +27,35 @@ namespace stranky_skoly.Controllers
         }
 
         [HttpPost]
-        public IActionResult Přihlášení(string email, string heslo)
+        public async Task<IActionResult> Přihlášení(string email, string heslo)
         {
             var user = _context.Users.FirstOrDefault(u => u.Name == email);
 
             if (user != null)
             {
                 var hasher = new PasswordHasher<User>();
-
                 var result = hasher.VerifyHashedPassword(user, user.Password, heslo);
 
                 if (result == PasswordVerificationResult.Success)
                 {
-                    if (!user.Name.Any(char.IsDigit))
+                    // Detekce role učitele (pokud jméno neobsahuje číslo)
+                    bool isTeacher = !user.Name.Any(char.IsDigit);
+                    string userRole = isTeacher ? "Teacher" : "Student";
+
+                    // Vytvoření Identity ("občanky" přihlášeného)
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, user.Name),
+                        new Claim(ClaimTypes.Role, userRole)
+                    };
+
+                    var claimsIdentity = new ClaimsIdentity(claims, "Cookies");
+
+                    // Přihlášení do cookie
+                    await HttpContext.SignInAsync("Cookies", new ClaimsPrincipal(claimsIdentity));
+
+                    // Přesměrování na základě role
+                    if (isTeacher)
                     {
                         return RedirectToAction("Učitelé", "User");
                     }
@@ -44,23 +63,32 @@ namespace stranky_skoly.Controllers
                     {
                         return RedirectToAction("Index", "Home");
                     }
-                    
                 }
             }
-
-            ModelState.AddModelError(string.Empty, "Špatné jméno nebo heslo.");
-            return View(); // 👈 TO TI CHYBÍ
+            
+            // Zde můžete nastavit chybovou hlášku pro špatné jméno nebo heslo
+            return View(); 
         
         }
 
+
+
+        [Authorize(Roles = "Teacher")]
         public IActionResult Učitelé()
         {
             return View();
         }
 
+        [Authorize(Roles = "Student,Teacher")]
         public IActionResult Rozvrh()
         {
             return View();
+        }
+
+        public async Task<IActionResult> Odhlášení()
+        {
+            await HttpContext.SignOutAsync("Cookies");
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Registrace()
@@ -102,4 +130,6 @@ namespace stranky_skoly.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
+
+    
 }

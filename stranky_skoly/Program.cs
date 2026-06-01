@@ -16,6 +16,13 @@ namespace stranky_skoly
                 options.UseSqlServer(
                     builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            builder.Services.AddAuthentication("Cookies")
+                .AddCookie("Cookies", options =>
+                {
+                    options.LoginPath = "/User/Přihlášení";
+                    options.AccessDeniedPath = "/Home/Index"; // Přesměruje na Úvod, pokud student zkusí zadat adresu Učitelů
+                });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -29,6 +36,7 @@ namespace stranky_skoly
             app.UseHttpsRedirection();
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapStaticAssets();

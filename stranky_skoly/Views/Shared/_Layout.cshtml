@@ -20,10 +20,21 @@
             <nav>
                 <ul class="menu">
                     <li><a asp-controller="Home" asp-action="Index">Úvod</a></li>
-                    <li><a asp-controller="User" asp-action="Přihlášení">Přihlášení</a></li>
-                    <li><a asp-controller="User" asp-action="Registrace">Registrace</a></li>
-                    <li><a asp-controller="User" asp-action="Učitelé">Učitelé</a></li>
-                    <li><a asp-controller="User" asp-action="Rozvrh">Rozvrh</a></li>
+
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <li><a asp-controller="User" asp-action="Přihlášení">Přihlášení</a></li>
+                        <li><a asp-controller="User" asp-action="Registrace">Registrace</a></li>
+                    }
+                    else
+                    {
+                        @if (User.IsInRole("Teacher"))
+                        {
+                            <li><a asp-controller="User" asp-action="Učitelé">Učitelé</a></li>
+                        }
+                        <li><a asp-controller="User" asp-action="Rozvrh">Rozvrh</a></li>
+                        <li><a asp-controller="User" asp-action="Odhlášení">Odhlášení</a></li>
+                    }
                 </ul>
             </nav>
         </div>  
