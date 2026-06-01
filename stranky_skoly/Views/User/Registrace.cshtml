@@ -64,17 +64,17 @@
     <p>Už máte účet? <a asp-action="Přihlášení" asp-controller="User">Přihlaste se</a></p>
 </div>
 
-@* Uživatel musí být nejprve vůbec přihlášený (aby viděl alespoň něco) *@
+
 @if (User.Identity.IsAuthenticated)
 {
-    @* Zobrazení jen pro studenta (s číslem v přihlášení) *@
+
     @if (User.IsInRole("Student"))
     {
         <h2>Rozvrh studenta</h2>
         <p>Zde se vypíše tabulka s rozvrhem...</p>
     }
 
-    @* Zobrazení VŠEHO PRO UČITELE *@
+
     @if (User.IsInRole("Teacher"))
     {
         <h2>Učitelská super-tajná sekce</h2>
@@ -86,7 +86,6 @@
 }
 else
 {
-    @* Nepřihlášený uživatel (nevidí ani jedno) *@
-    <h2>Vítejte! PROSÍM, PŘIHLASTE SE</h2>
+
     <a asp-controller="User" asp-action="Přihlášení">Přejít k přihlášení</a>
 }
