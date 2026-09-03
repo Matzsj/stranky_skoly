@@ -1,6 +1,3 @@
 <Solution>
-  <Project Path="docker-compose.dcproj">
-    <Build />
-  </Project>
-  <Project Path="stranky_skoly\stranky_skoly.csproj" />
+  <Project Path="stranky_skoly.csproj" />
 </Solution>
