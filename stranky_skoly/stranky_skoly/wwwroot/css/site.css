@@ -33,8 +33,9 @@ body {
 body {
     margin: 0;
     font-family: 'Segoe UI', Arial, sans-serif;
-    background-color: #f4f4f4;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 50%, #f0f2f5 100%);
     color: #333;
+    min-height: 100vh;
 }
 
 .container {
@@ -44,7 +45,8 @@ body {
 }
 
 header {
-    background-color: #223974;
+    background: linear-gradient(90deg, #1a2d57 0%, #223974 50%, #2a3d8f 100%);
+    box-shadow: 0 4px 12px rgba(34, 57, 116, 0.3);
 }
 
 .header-flex {
@@ -80,37 +82,58 @@ header {
 
     .menu a {
         text-decoration: none;
-        color: dimgrey;
+        color: #e0e0e0;
         font-weight: bold;
         padding: 8px 14px;
         border-radius: 5px;
-        transition: 0.3s;
+        transition: all 0.3s ease;
+        position: relative;
     }
 
+        .menu a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ffd700, #ff6b6b);
+            transition: width 0.3s ease;
+        }
+
         .menu a:hover {
-            background-color: white;
-            color: black;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffd700;
+            transform: translateY(-2px);
+        }
+
+        .menu a:hover::before {
+            width: 100%;
         }
 
     .menu .active {
-        background-color: white;
-        color: #8b0000;
+        background: linear-gradient(135deg, #ff6b6b, #ff8c42);
+        color: white;
+        box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
     }
 
 h1 {
     font-size: 36px;
-    color: black;
+    color: #1a2d57;
     margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
     margin-top: 40px;
-    color: black;
+    color: #223974;
+    border-bottom: 3px solid #ff6b6b;
+    padding-bottom: 10px;
 }
 
 h3 {
     margin-top: 25px;
-    color: black;
+    color: #2a3d8f;
 }
 
 .content-img {
@@ -126,12 +149,26 @@ table {
 }
 
 table, th, td {
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
+}
+
+table {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+table tbody tr:hover {
+    background-color: #f0f7ff;
+    transition: background-color 0.2s ease;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
 
 th {
-    background-color: #8b0000;
+    background: linear-gradient(135deg, #8b0000, #c41e3a);
     color: white;
+    font-weight: 600;
 }
 
 th, td {
@@ -140,10 +177,12 @@ th, td {
 }
 
 footer {
-    background-color: #223974;
+    background: linear-gradient(90deg, #1a2d57 0%, #223974 50%, #2a3d8f 100%);
     color: white;
     text-align: center;
     padding: 20px 0;
+    box-shadow: 0 -4px 12px rgba(34, 57, 116, 0.3);
+    margin-top: 40px;
 }
 
     footer a {
